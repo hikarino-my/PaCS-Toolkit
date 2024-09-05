@@ -15,7 +15,7 @@ class GROMACS(SuperSimulator):
     def run_md(self, settings: MDsettings, cycle: int, replica: int) -> None:
         dir = settings.each_replica(_cycle=cycle, _replica=replica)
         self.run_grompp(settings, dir)
-        cmd_mdrun = f"{settings.cmd_mpi} {settings.cmd_serial} \
+        cmd_mdrun = f"{settings.cmd_serial} \
                 -deffnm {dir}/prd 1> {dir}/mdrun.log 2>&1"  # NOQA: E221
 
         if Path(f"{dir}/prd.log").exists():
