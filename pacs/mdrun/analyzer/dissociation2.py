@@ -81,9 +81,7 @@ class Dissociation2(SuperAnalyzer):
 
         dist1 = np.linalg.norm(np.loadtxt(f"{dir}/interCOM_xyz_1.xvg")[:, [1, 2, 3]], axis=1)
         dist2 = np.linalg.norm(np.loadtxt(f"{dir}/interCOM_xyz_2.xvg")[:, [1, 2, 3]], axis=1)
-        if dist1 > settings.threshold:
-            dist1 = settings.threshold
-        if dist2 < settings.threshold2:
-            dist2 = settings.threshold2
+        dist1 = np.clip(dist1, None, settings.threshold)
+        dist2 = np.clip(dist2, settings.threshold2, None)
 
         return dist1 - dist2
