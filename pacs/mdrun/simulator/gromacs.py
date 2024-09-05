@@ -18,25 +18,10 @@ class GROMACS(SuperSimulator):
         cmd_mdrun = f"{settings.cmd_mpi} {settings.cmd_serial} \
                 -deffnm {dir}/prd 1> {dir}/mdrun.log 2>&1"  # NOQA: E221
 
-        # Depending on the supercomputer environment, MPI-related hangs may occur in rare cases.
-        # To solve this problem, restart mdrun until log is output
-        # This is a useless calculation, but it is better than a hang.
-        run_flag = False
-        for _ in range(20):
-            if Path(f"{dir}/prd.log").exists():
-                subprocess.run(f"rm {dir}/prd.log", shell=True)
-                module_time.sleep(1)
-            process = subprocess.Popen(cmd_mdrun, shell=True)
-            module_time.sleep(10)
-            if Path(f"{dir}/prd.log").exists():
-                run_flag = True
-                break
-            else:
-                process.kill()
-                module_time.sleep(5)
-        if not run_flag:
-            LOGGER.error("mdrun did not start due to some technical errors")
-            exit(1)
+        if Path(f"{dir}/prd.log").exists():
+            subprocess.run(f"rm {dir}/prd.log", shell=True)
+            module_time.sleep(1)
+        process = subprocess.Popen(cmd_mdrun, shell=True)
         process.wait()
         if process.returncode != 0:
             LOGGER.error("error occurred at mdrun command")
@@ -86,26 +71,11 @@ class GROMACS(SuperSimulator):
                 -deffnm prd \
                 1> {dir}/mdrun.log 2>&1"  # NOQA: E221
 
-        # Depending on the supercomputer environment, MPI-related hangs may occur in rare cases.
-        # To solve this problem, restart mdrun until log is output
-        # This is a useless calculation, but it is better than a hang.
-        run_flag = False
-        for _ in range(20):
-            if Path(f"{groupdir[0]}/prd.log").exists():
-                for dir in groupdir:
-                    subprocess.run(f"rm {dir}/prd.log", shell=True)
-                    module_time.sleep(1)
-            process = subprocess.Popen(cmd_mdrun, shell=True)
-            module_time.sleep(10)
-            if Path(f"{groupdir[0]}/prd.log").exists():
-                run_flag = True
-                break
-            else:
-                process.kill()
-                module_time.sleep(5)
-        if not run_flag:
-            LOGGER.error("mdrun did not start due to some technical error")
-            exit(1)
+        if Path(f"{groupdir[0]}/prd.log").exists():
+            for dir in groupdir:
+                subprocess.run(f"rm {dir}/prd.log", shell=True)
+                module_time.sleep(1)
+        process = subprocess.Popen(cmd_mdrun, shell=True)
         process.wait()
         if process.returncode != 0:
             LOGGER.error("error occurred at mdrun command")
