@@ -49,6 +49,7 @@ class Dissociation2(SuperAnalyzer):
                 -f {dir}/prd{extension} \
                 -s {dir}/prd.tpr \
                 -o {dir}/prd_image{extension} \
+                -n {settings.index_file} \
                 -pbc mol \
                 -ur compact \
                 1> {dir}/center.log 2>&1"  # NOQA: E221
