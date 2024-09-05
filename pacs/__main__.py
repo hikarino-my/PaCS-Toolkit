@@ -4,6 +4,7 @@ from ._version import __version__
 from .mdrun.analyzer.a_d import A_D
 from .mdrun.analyzer.association import Association
 from .mdrun.analyzer.dissociation import Dissociation
+from .mdrun.analyzer.dissociation2 import Dissociation2
 from .mdrun.analyzer.ee import EdgeExpansion
 from .mdrun.analyzer.rmsd import RMSD
 from .mdrun.analyzer.superAnalyzer import SuperAnalyzer
@@ -42,6 +43,7 @@ def prepare_md(
     analyzer: SuperAnalyzer = {
         "target": Target(),
         "dissociation": Dissociation(),
+        "dissociation2": Dissociation2(),
         "association": Association(),
         "rmsd": RMSD(),
         "ee": EdgeExpansion(),

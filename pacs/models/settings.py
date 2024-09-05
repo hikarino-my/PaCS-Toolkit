@@ -65,6 +65,7 @@ class MDsettings:
     analyzer: str = "mdtraj"
     type: str = None
     threshold: float = None
+    threshold2: float = None
     skip_frame: int = 1
     reference: Path = None
     selection1: str = None
@@ -198,6 +199,7 @@ class MDsettings:
             "target",
             "association",
             "dissociation",
+            "dissociation2",
             "rmsd",
             "ee",
             "a_d",
