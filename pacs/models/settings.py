@@ -155,6 +155,8 @@ class MDsettings:
         self.skip_frame = int(self.skip_frame)
         if self.threshold is not None:
             self.threshold = float(self.threshold)
+        if self.threshold2 is not None:
+            self.threshold2 = float(self.threshold2)
         if self.trial < 0 or self.trial > 999:
             LOGGER.error(f"trial number {self.trial} is out of range 1..999")
             exit(1)
