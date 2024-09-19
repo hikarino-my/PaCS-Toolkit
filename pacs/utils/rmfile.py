@@ -1,6 +1,6 @@
 import subprocess, zstandard
 from pathlib import Path
-
+import os
 from pacs.models.settings import MDsettings
 from pacs.utils.logger import generate_logger
 
@@ -110,7 +110,7 @@ def rmfile(settings: MDsettings, cycle: int) -> None:
     import tarfile
     cycle_dir = settings.each_cycle(_cycle=cycle)
     with tarfile.open(f'{cycle_dir}.tar.gz', 'w:gz') as tar:
-        tar.add(cycle_dir)
+        tar.add(cycle_dir, arcname=os.path.basename(cycle_dir))
     run_rm(cycle_dir)
     LOGGER.info(f"rmfile completed successfully in cycle{cycle:03}")
 
