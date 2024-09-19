@@ -99,7 +99,7 @@ class Association(SuperAnalyzer):
                 -f {dir}/input.gro \
                 -s {dir}/prd.tpr \
                 -n {settings.index_file} \
-                -o {dir}/input_image.{extension} \
+                -o {dir}/input_image{extension} \
                 1> {dir}/input_image.log 2>&1"  # NOQA: E221
         res_image = subprocess.run(cmd_image, shell=True)
         if res_image.returncode != 0:
