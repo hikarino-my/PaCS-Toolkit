@@ -94,10 +94,6 @@ class Association(SuperAnalyzer):
 
         cmd_rmfile = f"rm {dir}/prd_image{extension}"
         #subprocess.run(cmd_rmfile, shell=True)
-        res_rm = subprocess.run(f"rm {dir}/prd{extension}", shell=True)
-        if res_rm.returncode != 0:
-            LOGGER.error("error occurred at rm command")
-            exit(1)
 
         xyz_rep = np.loadtxt(f"{dir}/interCOM_xyz.xvg")
         dist = np.linalg.norm(xyz_rep[:, [1, 2, 3]], axis=1)

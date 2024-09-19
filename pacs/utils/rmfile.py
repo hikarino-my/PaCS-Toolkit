@@ -63,6 +63,8 @@ def rmfile(settings: MDsettings, cycle: int) -> None:
             # output energy edr
             run_rm(f"{dir}/prd.edr")
 
+            run_rm(f"{dir}/prd.xtc")
+
             # compress input
             cctx = zstandard.ZstdCompressor()
             with open(f"{dir}/input.gro", "rb") as ifh, open(f"{dir}/input.gro.zst", "wb") as ofh:
