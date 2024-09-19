@@ -65,10 +65,7 @@ def rmfile(settings: MDsettings, cycle: int) -> None:
 
             run_rm(f"{dir}/prd.xtc")
 
-            # compress input
-            cctx = zstandard.ZstdCompressor()
-            with open(f"{dir}/input.gro", "rb") as ifh, open(f"{dir}/input.gro.zst", "wb") as ofh:
-                cctx.copy_stream(ifh, ofh)
+            # input
             run_rm(f"{dir}/input.gro")
 
         # amber
