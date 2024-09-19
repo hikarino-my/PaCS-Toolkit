@@ -32,7 +32,7 @@ def detect_n_cycle(settings: MDsettings) -> int:
 
 
 def run_rm(file_name: str) -> None:
-    cmd_rm = f"rm -f {file_name}"
+    cmd_rm = f"rm -rf {file_name}"
     res_rm = subprocess.run(cmd_rm, shell=True)
     if res_rm.returncode != 0:
         LOGGER.error(f"error occurred at rm {file_name} command")
