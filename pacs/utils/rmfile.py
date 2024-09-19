@@ -105,6 +105,11 @@ def rmfile(settings: MDsettings, cycle: int) -> None:
 
             continue
 
+    import tarfile
+    cycle_dir = settings.each_cycle(_cycle=cycle)
+    with tarfile.open(f'{cycle_dir}.tar.gz', 'w:gz') as tar:
+        tar.add(cycle_dir)
+    run_rm(cycle_dir)
     LOGGER.info(f"rmfile completed successfully in cycle{cycle:03}")
 
 
