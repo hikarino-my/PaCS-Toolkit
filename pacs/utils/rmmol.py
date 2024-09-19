@@ -70,7 +70,7 @@ def make_top_gmx(settings: MDsettings) -> None:
     dir = settings.each_replica(_cycle=0, _replica=1)
     ext = settings.trajectory_extension
     if Path(f"{dir}/rmmol_top.pdb").exists():
-        LOGGER.warn(f"{dir}/rmmol_top.pdb already exists. continue")
+        LOGGER.warning(f"{dir}/rmmol_top.pdb already exists. continue")
     if Path(f"{dir}/prd.gro").exists():
         pass
     else:
@@ -200,7 +200,7 @@ def rmmol_replica_gmx(
     dir = settings.each_replica(_cycle=cycle, _replica=replica)
     # file check
     if not Path(f"{dir}/prd{ext}").exists():
-        LOGGER.warn(f"{dir}/prd{ext} does not exist")
+        LOGGER.warning(f"{dir}/prd{ext} does not exist")
         return
 
     # create new trajectory without water
@@ -232,7 +232,7 @@ def rmmol_replica_cpptraj(
     dir = settings.each_replica(_cycle=cycle, _replica=replica)
     # file check
     if not Path(f"{dir}/prd{ext}").exists():
-        LOGGER.warn(f"{dir}/prd{ext} does not exist")
+        LOGGER.warning(f"{dir}/prd{ext} does not exist")
         return
 
     # create new trajectory without water

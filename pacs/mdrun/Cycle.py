@@ -51,7 +51,7 @@ class Cycle:
             return False
         if self.meet_threshold():
             if self.settings.rmmol:
-                self.rmmol(last_cycle=True)
+                self.rmmol(last_cycle=False)
             if self.settings.rmfile:
                 self.clean_cycle()
             return True

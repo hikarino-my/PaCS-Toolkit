@@ -1,4 +1,4 @@
-import subprocess
+import subprocess, zstandard
 from pathlib import Path
 
 from pacs.models.settings import MDsettings
@@ -59,6 +59,15 @@ def rmfile(settings: MDsettings, cycle: int) -> None:
 
             # output structure prd
             run_rm(f"{dir}/prd.gro")
+
+            # output energy edr
+            run_rm(f"{dir}/prd.edr")
+
+            # compress input
+            cctx = zstandard.ZstdCompressor()
+            with open(f"{dir}/input.gro", "rb") as ifh, open(f"{dir}/input.gro.zst", "wb") as ofh:
+                cctx.copy_stream(ifh, ofh)
+            run_rm(f"{dir}/input.gro")
 
         # amber
         elif settings.simulator == "amber":
