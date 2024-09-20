@@ -103,12 +103,12 @@ class Dissociation(SuperAnalyzer):
                 -f {dir}/input.gro \
                 -s {dir}/prd.tpr \
                 -n {settings.index_file} \
-                -o {dir}/input_image{extension} \
-                1> {dir}/input_image.log 2>&1"  # NOQA: E221
+                -o {dir}/input{extension} \
+                1> {dir}/input_compress.log 2>&1"  # NOQA: E221
         res_image = subprocess.run(cmd_image, shell=True)
         if res_image.returncode != 0:
-            LOGGER.error("error occured at image command")
-            LOGGER.error(f"see {dir}/input_image.log")
+            LOGGER.error("error occured at input_compress command")
+            LOGGER.error(f"see {dir}/input_compress.log")
             exit(1)
 
         xyz_rep = np.loadtxt(f"{dir}/interCOM_xyz.xvg")
