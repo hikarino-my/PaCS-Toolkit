@@ -73,10 +73,11 @@ class Target(SuperAnalyzer):
         ref = settings.reference
         dir = settings.each_replica(_cycle=cycle, _replica=replica)
 
-        cmd_image = f"echo 'System' \
+        cmd_image = f"echo 'nowation' \
                 | {settings.cmd_gmx} trjconv \
                 -f {dir}/prd{extension} \
                 -s {dir}/prd.tpr \
+                -n {ndx} \
                 -o {dir}/prd_image{extension} \
                 -pbc mol \
                 -ur compact \
@@ -95,14 +96,25 @@ class Target(SuperAnalyzer):
                 -n {ndx} \
                 -xvg none 1> {dir}/rms.log 2>&1"  # NOQA: E221
         res_rms = subprocess.run(cmd_rms, shell=True)
-
         if res_rms.returncode != 0:
-            LOGGER.error("error occured at rms command")
+            LOGGER.error("error occurred at rms command")
             LOGGER.error(f"see {dir}/rms.log")
             exit(1)
 
         cmd_rmfile = f"rm {dir}/prd_image{extension}"
-        subprocess.run(cmd_rmfile, shell=True)
+        #subprocess.run(cmd_rmfile, shell=True)
+        cmd_image = f"echo 'System' \
+                | {settings.cmd_gmx} trjconv \
+                -f {dir}/input.gro \
+                -s {dir}/prd.tpr \
+                -n {ndx} \
+                -o {dir}/input{extension} \
+                1> {dir}/input_compress.log 2>&1"  # NOQA: E221
+        res_image = subprocess.run(cmd_image, shell=True)
+        if res_image.returncode != 0:
+            LOGGER.error("error occured at input_compress command")
+            LOGGER.error(f"see {dir}/input_compress.log")
+            exit(1)
 
         rmsd_rep = np.loadtxt(f"{dir}/rms.xvg")[:, 1]
         return rmsd_rep

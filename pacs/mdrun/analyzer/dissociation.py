@@ -63,7 +63,7 @@ class Dissociation(SuperAnalyzer):
         extension = settings.trajectory_extension
         grp1 = settings.selection1
         grp2 = settings.selection2
-        index_file = settings.index_file
+        ndx = settings.index_file
 
         dir = settings.each_replica(_cycle=cycle, _replica=replica)
 
@@ -71,22 +71,22 @@ class Dissociation(SuperAnalyzer):
                 | {settings.cmd_gmx} trjconv \
                 -f {dir}/prd{extension} \
                 -s {dir}/prd.tpr \
-                -n {settings.index_file} \
+                -n {ndx} \
                 -o {dir}/prd_image{extension} \
                 -pbc mol \
                 -ur compact \
                 1> {dir}/center.log 2>&1"  # NOQA: E221
         res_image = subprocess.run(cmd_image, shell=True)
         if res_image.returncode != 0:
-            LOGGER.error("error occured at image command")
+            LOGGER.error("error occurred at image command")
             LOGGER.error(f"see {dir}/center.log")
             exit(1)
 
         cmd_dist = f"{settings.cmd_gmx} distance \
                 -f {dir}/prd_image{extension} \
                 -s {dir}/prd.tpr \
-                -n {settings.index_file} \
                 -oxyz {dir}/interCOM_xyz.xvg \
+                -n {ndx} \
                 -xvg none \
                 -select 'com of group {grp1} plus com of group {grp2}' \
                 1> {dir}/distance.log 2>&1"  # NOQA: E221
@@ -102,7 +102,7 @@ class Dissociation(SuperAnalyzer):
                 | {settings.cmd_gmx} trjconv \
                 -f {dir}/input.gro \
                 -s {dir}/prd.tpr \
-                -n {settings.index_file} \
+                -n {ndx} \
                 -o {dir}/input{extension} \
                 1> {dir}/input_compress.log 2>&1"  # NOQA: E221
         res_image = subprocess.run(cmd_image, shell=True)
