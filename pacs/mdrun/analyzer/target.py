@@ -79,7 +79,7 @@ class Target(SuperAnalyzer):
         else:
             pbc_option = "-pbc mol -ur compact"
 
-        cmd_image = f"echo 'System' \
+        cmd_image = f"echo 'nowation' \
                 | {settings.cmd_gmx} trjconv \
                 -f {dir}/prd{extension} \
                 -s {dir}/prd.tpr \
@@ -108,9 +108,6 @@ class Target(SuperAnalyzer):
             LOGGER.error("error occured at rms command")
             LOGGER.error(f"see {dir}/rms.log")
             exit(1)
-
-        cmd_rmfile = f"rm {dir}/prd_image{extension}"
-        subprocess.run(cmd_rmfile, shell=True)
 
         rmsd_rep = np.loadtxt(f"{dir}/rms.xvg")[:, 1]
         return rmsd_rep

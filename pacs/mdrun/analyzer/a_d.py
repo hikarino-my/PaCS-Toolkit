@@ -89,7 +89,7 @@ class A_D(SuperAnalyzer):
         else:
             pbc_option = "-pbc mol -ur compact"
 
-        cmd_image = f"echo 'System' \
+        cmd_image = f"echo 'nowation' \
                 | {settings.cmd_gmx} trjconv \
                 -f {dir}/prd{extension} \
                 -s {dir}/prd.tpr \
@@ -118,9 +118,6 @@ class A_D(SuperAnalyzer):
             LOGGER.error("error occurred at distance command")
             LOGGER.error(f"see {dir}/distance.log")
             exit(1)
-
-        cmd_rmfile = f"rm {dir}/prd_image{extension}"
-        subprocess.run(cmd_rmfile, shell=True)
 
         xyz_rep = np.loadtxt(f"{dir}/interCOM_xyz.xvg")
         dist = np.linalg.norm(xyz_rep[:, [1, 2, 3]], axis=1)
