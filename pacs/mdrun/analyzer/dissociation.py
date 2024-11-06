@@ -76,6 +76,7 @@ class Dissociation(SuperAnalyzer):
                 | {settings.cmd_gmx} trjconv \
                 -f {dir}/prd{extension} \
                 -s {dir}/prd.tpr \
+                -n {settings.index_file} \
                 -o {dir}/prd_image{extension} \
                 {pbc_option} \
                 1> {dir}/image.log 2>&1"  # NOQA: E221
